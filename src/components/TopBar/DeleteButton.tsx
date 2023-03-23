@@ -5,7 +5,12 @@ import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import { FC, useState} from 'react';
+import { FC, useState } from 'react';
+
+type PropsType = {
+    selectedNote: number,
+    deleteSelected: (noteId: number) => void
+}
 
 const style = {
     position: 'relative',
@@ -19,10 +24,14 @@ const style = {
     p: 4,
 };
 
-const DeleteButton:FC = () => {
+const DeleteButton: FC<PropsType> = ({ selectedNote, deleteSelected }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const handleConfirm = () => {
+        handleClose();
+        deleteSelected(selectedNote);
+    }
 
     return (
         <div>
@@ -67,7 +76,7 @@ const DeleteButton:FC = () => {
                         </Button>
                         <Button
                             sx={{ ':focus': { outline: 'none' } }}
-                            onClick={handleClose}
+                            onClick={handleConfirm}
                         >
                             OK
                         </Button>

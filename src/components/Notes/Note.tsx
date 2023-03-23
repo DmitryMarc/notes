@@ -1,18 +1,26 @@
-import { ListItem, ListItemText } from "@mui/material"
+import { ListItemButton, ListItemText } from "@mui/material"
 import { FC } from "react"
+import { NoteType } from "../../@types/common"
 
 type PropsType = {
-    isList: boolean, 
-    index: number, 
+    isList: boolean,
+    note: NoteType,
+    selectedNote: number,
+    setSelectedNote: (id: number) => void,
     key: number
 }
 
-const Note:FC<PropsType> = ({isList, index, key}) => {
+const Note: FC<PropsType> = ({ isList, note, selectedNote, setSelectedNote, key }) => {
     return (
-        <ListItem key={key} sx={{width: isList ? '100%' : '50%'}}>
-            {index}
-            <ListItemText primary="Photos" secondary="Jan 9, 2014..." />
-        </ListItem>
+        <>
+            <ListItemButton key={key}
+                selected={selectedNote === note.id}
+                onClick={() => setSelectedNote(note.id)}
+                sx={{ width: isList ? '100%' : '50%' }}
+            >
+                <ListItemText primary={note.title} secondary={note.content} />
+            </ListItemButton>
+        </>
     )
 }
 

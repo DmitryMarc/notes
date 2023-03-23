@@ -11,11 +11,13 @@ type PropsType = {
     isList: boolean,
     setIsList: (isList: boolean) => void,
     isEdit: boolean,
-    setIsEdit:(isList: boolean) => void
+    setIsEdit: (isList: boolean) => void,
+    selectedNote: number,
+    deleteSelected: (noteId: number) => void
 }
 
-const TopBar: FC<PropsType> = ({ isList, setIsList, isEdit, setIsEdit }) => {
-    
+const TopBar: FC<PropsType> = ({ isList, setIsList, isEdit, setIsEdit, selectedNote, deleteSelected }) => {
+
     const handlerList = () => {
         if (!isList) {
             setIsList(true)
@@ -57,7 +59,9 @@ const TopBar: FC<PropsType> = ({ isList, setIsList, isEdit, setIsEdit }) => {
                 textAlign='right'
                 borderRight={'1px solid lightgray'}
             >
-                <DeleteButton />
+                <DeleteButton
+                    selectedNote={selectedNote}
+                    deleteSelected={deleteSelected} />
             </Grid>
             <Grid item sm={8} xs={6}>
                 <Stack
@@ -65,10 +69,10 @@ const TopBar: FC<PropsType> = ({ isList, setIsList, isEdit, setIsEdit }) => {
                     justifyContent="space-between"
                 >
                     <Tooltip title="Edit">
-                        <IconButton 
+                        <IconButton
                             sx={{ ':focus': { outline: 'none' } }}
                             onClick={handlerEdit}
-                            >
+                        >
                             <BorderColorOutlinedIcon />
                         </IconButton>
                     </Tooltip>
